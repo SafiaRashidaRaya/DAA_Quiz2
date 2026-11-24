@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0e1a1f" />
+    <title>Maze Solver</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="top">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <svg
+              width="23"
+              height="23"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v6h-6"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1>Maze Solver</h1>
+            <p class="subtitle">
+              Temukan jalan keluar, satu langkah demi satu.
+            </p>
+          </div>
+        </div>
+      </header>
+      <div class="layout">
+        <section class="board-card" aria-labelledby="maze-heading">
+          <div class="board-head">
+            <h2 id="maze-heading">Labirin <span id="maze-number">#1</span></h2>
+            <span class="hint">Gunakan tombol panah atau WASD</span>
+          </div>
+          <div class="board-wrap">
+            <div
+              id="maze"
+              class="maze"
+              role="grid"
+              aria-label="Labirin 15 kali 15"
+            ></div>
+          </div>
+          <div class="board-foot">
+            <div class="legend">
+              <span><i class="dot you"></i>Pemain</span
+              ><span><i class="dot start"></i>Start</span
+              ><span><i class="dot finish"></i>Finish</span>
+            </div>
+            <span>15 × 15 grid</span>
+          </div>
+        </section>
+        <aside class="side">
+          <section class="side-card">
+            <h2>Statistik permainan</h2>
+            <div class="stats">
+              <div class="stat">
+                <span>Waktu</span><strong id="time">00:00</strong>
+              </div>
+              <div class="stat">
+                <span>Langkah</span><strong id="steps">0</strong>
+              </div>
+              <div class="stat score">
+                <span>Skor</span><strong id="score">—</strong>
+              </div>
+            </div>
+            <div id="message" class="message" role="status" aria-live="polite">
+              Tekan tombol arah untuk memulai.
+            </div>
+          </section>
+          <section class="side-card">
+            <h2>Kontrol</h2>
+            <div class="buttons">
+              <button class="button primary" id="new-game">Labirin baru</button
+              ><button class="button secondary" id="restart">
+                Ulangi maze
+              </button>
+            </div>
+            <div class="mobile-controls">
+              <div class="pad" aria-label="Kontrol arah">
+                <button data-dir="up" aria-label="Atas">↑</button
+                ><button data-dir="left" aria-label="Kiri">←</button
+                ><button data-dir="down" aria-label="Bawah">↓</button
+                ><button data-dir="right" aria-label="Kanan">→</button>
+              </div>
+            </div>
+          </section>
+          <section class="side-card">
+            <h2>Cara bermain</h2>
+            <p class="controls-help">
+              Gerakkan pemain biru menuju kotak finish merah. Setiap langkah
+              valid dihitung. Kamu juga bisa pakai WASD.
+            </p>
+            <div class="mobile-controls">
+              <p class="controls-help controls-help--always">
+                Ketuk tombol panah untuk bergerak.
+              </p>
+            </div>
+          </section>
+        </aside>
+      </div>
+      <footer class="footer">
+        Labirin acak dibuat dengan DFS · Jarak minimum dihitung dengan BFS
+      </footer>
+      <div id="announcement" class="sr-only" aria-live="assertive"></div>
+    </main>
+    <script src="js/script.js"></script>
+  </body>
+</html>
