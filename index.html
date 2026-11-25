@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#0e1a1f" />
+    <meta name="theme-color" content="#120c20" />
     <title>Maze Solver</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -12,63 +12,41 @@
       <header class="top">
         <div class="brand">
           <div class="logo" aria-hidden="true">
-            <svg
-              width="23"
-              height="23"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v6h-6"
-              />
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v6h-6" />
             </svg>
           </div>
           <div>
             <h1>Maze Solver</h1>
-            <p class="subtitle">
-              Temukan jalan keluar, satu langkah demi satu.
-            </p>
+            <p class="subtitle">Temukan jalan keluar, satu langkah demi satu.</p>
           </div>
         </div>
       </header>
       <div class="layout">
         <section class="board-card" aria-labelledby="maze-heading">
           <div class="board-head">
-            <h2 id="maze-heading">Labirin <span id="maze-number">#1</span></h2>
+            <h2 id="maze-heading">Level <span id="maze-number">1</span></h2>
             <span class="hint">Gunakan tombol panah atau WASD</span>
           </div>
           <div class="board-wrap">
-            <div
-              id="maze"
-              class="maze"
-              role="grid"
-              aria-label="Labirin 15 kali 15"
-            ></div>
+            <div id="maze" class="maze" role="grid" aria-label="Labirin"></div>
           </div>
           <div class="board-foot">
             <div class="legend">
-              <span><i class="dot you"></i>Pemain</span
-              ><span><i class="dot start"></i>Start</span
-              ><span><i class="dot finish"></i>Finish</span>
+              <span><i class="dot you"></i>Pemain</span>
+              <span><i class="dot start"></i>Start</span>
+              <span><i class="dot finish"></i>Finish</span>
             </div>
-            <span>15 × 15 grid</span>
+            <span id="grid-size">11 × 11 grid</span>
           </div>
         </section>
         <aside class="side">
           <section class="side-card">
             <h2>Statistik permainan</h2>
             <div class="stats">
-              <div class="stat">
-                <span>Waktu</span><strong id="time">00:00</strong>
-              </div>
-              <div class="stat">
-                <span>Langkah</span><strong id="steps">0</strong>
-              </div>
-              <div class="stat score">
-                <span>Skor</span><strong id="score">—</strong>
-              </div>
+              <div class="stat"><span>Waktu</span><strong id="time">00:00</strong></div>
+              <div class="stat"><span>Langkah</span><strong id="steps">0</strong></div>
+              <div class="stat score"><span>Total skor</span><strong id="score">0</strong></div>
             </div>
             <div id="message" class="message" role="status" aria-live="polite">
               Tekan tombol arah untuk memulai.
@@ -77,30 +55,26 @@
           <section class="side-card">
             <h2>Kontrol</h2>
             <div class="buttons">
-              <button class="button primary" id="new-game">Labirin baru</button
-              ><button class="button secondary" id="restart">
-                Ulangi maze
-              </button>
+              <button class="button primary" id="new-game">Labirin baru</button>
+              <button class="button secondary" id="restart">Ulangi level</button>
             </div>
             <div class="mobile-controls">
               <div class="pad" aria-label="Kontrol arah">
-                <button data-dir="up" aria-label="Atas">↑</button
-                ><button data-dir="left" aria-label="Kiri">←</button
-                ><button data-dir="down" aria-label="Bawah">↓</button
-                ><button data-dir="right" aria-label="Kanan">→</button>
+                <button data-dir="up" aria-label="Atas">↑</button>
+                <button data-dir="left" aria-label="Kiri">←</button>
+                <button data-dir="down" aria-label="Bawah">↓</button>
+                <button data-dir="right" aria-label="Kanan">→</button>
               </div>
             </div>
           </section>
           <section class="side-card">
             <h2>Cara bermain</h2>
             <p class="controls-help">
-              Gerakkan pemain biru menuju kotak finish merah. Setiap langkah
-              valid dihitung. Kamu juga bisa pakai WASD.
+              Gerakkan pemain biru menuju kotak finish merah. Setiap level
+              selesai membuka labirin yang lebih besar. Kamu juga bisa pakai WASD.
             </p>
             <div class="mobile-controls">
-              <p class="controls-help controls-help--always">
-                Ketuk tombol panah untuk bergerak.
-              </p>
+              <p class="controls-help controls-help--always">Ketuk tombol panah untuk bergerak.</p>
             </div>
           </section>
         </aside>
@@ -110,6 +84,26 @@
       </footer>
       <div id="announcement" class="sr-only" aria-live="assertive"></div>
     </main>
+
+    <dialog id="level-modal" class="modal" aria-labelledby="modal-title">
+      <div class="modal-body">
+        <h2 id="modal-title">Level 1 selesai!</h2>
+        <p class="modal-sub" id="modal-sub">Kamu menemukan jalan keluar.</p>
+        <div class="stars" id="stars" aria-hidden="true"></div>
+        <div class="result">
+          <div><span>Waktu</span><strong id="r-time">00:00</strong></div>
+          <div><span>Langkah</span><strong id="r-steps">0</strong></div>
+          <div><span>Optimal</span><strong id="r-min">0</strong></div>
+        </div>
+        <p class="gain">Skor level: <strong id="r-score">0</strong></p>
+        <div class="modal-actions">
+          <button class="button primary" id="next-level">Lanjut ke level 2</button>
+          <button class="button secondary" id="replay-level">Ulangi level ini</button>
+        </div>
+        <p class="next-info" id="next-info"></p>
+      </div>
+    </dialog>
+
     <script src="js/script.js"></script>
   </body>
 </html>
