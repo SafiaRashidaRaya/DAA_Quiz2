@@ -14,12 +14,10 @@
     left: { x: -1, y: 0 }, right: { x: 1, y: 0 },
   };
 
-  // Ukuran labirin bertambah 2 sel tiap level (tetap ganjil agar DFS valid), maksimal 25.
   const sizeForLevel = (lv) => Math.min(BASE_SIZE + (lv - 1) * 2, MAX_SIZE);
 
   function generateMaze() {
     maze = Array.from({ length: size }, () => Array(size).fill(1));
-    // DFS backtracking membuka sel ganjil, sehingga setiap maze terhubung dan selalu memiliki solusi.
     const stack = [{ x: 1, y: 1 }];
     maze[1][1] = 0;
     while (stack.length) {
@@ -42,7 +40,6 @@
   }
 
   function shortestPath() {
-    // BFS mengunjungi tiap sel terbuka per lapisan untuk mendapatkan jumlah langkah minimum.
     const queue = [{ ...start, distance: 0 }], seen = new Set([`${start.x},${start.y}`]);
     let head = 0;
     while (head < queue.length) {
@@ -172,13 +169,11 @@
   });
   document.querySelectorAll("[data-dir]").forEach((b) => b.addEventListener("click", () => move(b.dataset.dir)));
 
-  // Ulangi/ganti labirin setelah menang membatalkan skor level itu, supaya skor tidak bisa di-farm.
   const undoScore = () => { if (won) { totalScore -= lastLevelScore; lastLevelScore = 0; } };
   $("new-game").addEventListener("click", () => { undoScore(); loadLevel(true); });
   $("restart").addEventListener("click", () => { undoScore(); loadLevel(false); });
   $("next-level").addEventListener("click", () => { modal.close(); level++; loadLevel(true); });
   $("replay-level").addEventListener("click", () => { modal.close(); undoScore(); loadLevel(false); });
-  // Esc tidak menutup popup, pemain harus memilih salah satu tombol.
   modal.addEventListener("cancel", (e) => e.preventDefault());
 
   loadLevel(true);
